@@ -10,7 +10,7 @@ const nombreUsuarioModif = document.getElementById("nombre-modificar");
 const emailUsuarioModif = document.getElementById("email-modificar");
 const direccionUsuarioModif = document.getElementById("direccion-modificar");
 const telefonoUsuarioModif = document.getElementById("telefono-modificar");
-const botonModificarUsuario = document.querySelector(".modificar-usuario");
+const mensajeExito = document.querySelector(".mensaje-exito");
 
 const baseURL = "https://601da02bbe5f340017a19d60.mockapi.io/users";
 let newUrl = "";
@@ -33,6 +33,7 @@ const crearLista = (data) => {
   });
   borrarOnClick();
   modificarOnClick(data);
+  modifyUser(data);
 };
 
 const borrarOnClick = () => {
@@ -75,7 +76,6 @@ formulario.onsubmit = (e) => {
 botonAgregarUsuario.onclick = () => addUser(baseURL);
 
 const addUser = (baseURL) => {
-  console.log(baseURL);
   fetch(baseURL, {
     method: "post",
     headers: {
@@ -117,39 +117,41 @@ const modificarOnClick = () => {
 
       id = boton.parentElement.id;
       newUrl = `${baseURL}/${id}`;
+      console.log(newUrl);
+      modifyUser(newUrl);
     };
   });
 };
 
-formularioParaModificar.onsubmit = (e) => {
-  e.preventDefault();
-};
-
-botonModificarUsuario.onclick = () => modifyUser(newUrl);
-
 const modifyUser = (newUrl) => {
-  console.log(newUrl);
-  fetch(newUrl, {
-    method: "put",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      address: `${direccionUsuarioModif.value}`,
-      email: `${emailUsuarioModif.value}`,
-      fullname: `${nombreUsuarioModif.value}`,
-      phone: `${telefonoUsuarioModif.value}`,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
+  const botonModificarUsuario = document.querySelector("#modificar-usuario");
 
-      fetch(baseURL)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          crearLista(data);
-        });
-    });
+  botonModificarUsuario.onclick = () => {
+    console.log(newUrl);
+    fetch(newUrl, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        address: direccionUsuarioModif.value,
+        email: emailUsuarioModif.value,
+        fullname: nombreUsuarioModif.value,
+        phone: telefonoUsuarioModif.value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        formularioParaModificar.classList.add("hidden");
+        mensajeExito.classList.remove("hidden");
+
+        fetch(baseURL)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            crearLista(data);
+          });
+      });
+  };
 };
