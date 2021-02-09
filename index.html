@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clase 77</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main>
       <ul class="list"></ul>
+      <h2>AGREGAR USUARIO</h2>
       <form class="formulario">
         <label for="nombre">
           Nombre
@@ -30,6 +32,36 @@
         </label>
         <button type="submit" class="agregar-usuario" form="formulario">
           Agregar
+        </button>
+      </form>
+
+      <form class="formulario-modificar hidden">
+        <h2>MODIFICAR USUARIO</h2>
+        <label for="nombre-modificar">
+          Nombre
+          <input id="nombre-modificar" type="text" placeholder="Nombre" />
+        </label>
+
+        <label for="email-modificar">
+          Email
+          <input id="email-modificar" type="email" placeholder="email" />
+        </label>
+
+        <label for="direccion-modificar">
+          Direccion
+          <input id="direccion-modificar" type="text" placeholder="direccion" />
+        </label>
+
+        <label for="telefono-modificar">
+          Telefono
+          <input id="telefono-modificar" placeholder="telefono" />
+        </label>
+        <button
+          type="submit"
+          class="modificar-usuario"
+          form="formulario-modificar"
+        >
+          Modificar
         </button>
       </form>
     </main>
